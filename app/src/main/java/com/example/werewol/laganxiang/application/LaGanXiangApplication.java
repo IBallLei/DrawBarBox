@@ -13,7 +13,6 @@ import io.fogcloud.sdk.fog.callback.FogCallBack;
  */
 
 public class LaGanXiangApplication extends Application {
-
     /**
      * The s instance.
      */
@@ -32,6 +31,6 @@ public class LaGanXiangApplication extends Application {
     private void init() {
         sInstance = this;
         // 初始化庆科云
-        FogManager.initFog(this);
+//        FogManager.initFog(this);
     }
 }
