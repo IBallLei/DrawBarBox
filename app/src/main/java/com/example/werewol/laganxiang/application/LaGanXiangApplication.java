@@ -3,7 +3,11 @@ package com.example.werewol.laganxiang.application;
 import android.app.Application;
 import android.util.Log;
 
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.LocationClient;
 import com.example.werewol.laganxiang.manager.FogManager;
+import com.example.werewol.laganxiang.thirdparty.BaiduMapManager;
+import com.example.werewol.laganxiang.thirdparty.MyLocationListener;
 
 import io.fogcloud.sdk.fog.api.Fog;
 import io.fogcloud.sdk.fog.callback.FogCallBack;
@@ -32,5 +36,8 @@ public class LaGanXiangApplication extends Application {
         sInstance = this;
         // 初始化庆科云
 //        FogManager.initFog(this);
+
+        // 初始化百度地图
+        BaiduMapManager.init(getApplicationContext());
     }
 }
