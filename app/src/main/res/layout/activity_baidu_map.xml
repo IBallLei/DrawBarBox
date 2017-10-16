@@ -12,4 +12,22 @@
         android:layout_height="fill_parent"
         android:clickable="true" />
 
+    <Button
+        android:id="@+id/setting"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:text="设置"
+        android:textSize="15dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/info"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:text="信息"
+        android:textSize="15dp"
+        app:layout_constraintRight_toRightOf="@+id/setting"
+        app:layout_constraintTop_toBottomOf="@+id/setting" />
+
 </android.support.constraint.ConstraintLayout>

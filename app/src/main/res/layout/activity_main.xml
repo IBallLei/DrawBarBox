@@ -1,111 +1,143 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#dddddd"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.werewol.laganxiang.ui.MainActivity$PlaceholderFragment">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/img_demo"
+    <include
+        android:id="@+id/include"
+        layout="@layout/common_bar" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@android:color/darker_gray"
-        android:scaleType="fitXY"
-        android:src="@drawable/lagan6" />
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
-    <LinearLayout
-        android:id="@+id/layout_status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/img_demo"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        <ImageView
+            android:id="@+id/img_demo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@android:color/darker_gray"
+            android:scaleType="fitXY"
+            android:src="@drawable/lagan6" />
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/layout_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="设备状态" />
+            android:layout_below="@+id/img_demo"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="正常" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="锁状态：" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/txt_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正常" />
 
-    <LinearLayout
-        android:id="@+id/layout_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_status"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/layout_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="设备ID" />
+            android:layout_below="@+id/layout_status"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="42398472" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="设备ID：" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/txt_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="42398472" />
 
-    <LinearLayout
-        android:id="@+id/layout_jingdu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_id"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/layout_wendu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="经度" />
+            android:layout_below="@+id/layout_id"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
 
-        <TextView
-            android:id="@+id/txt_longitude"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="正在获取..." />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="温度：" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/txt_wendu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正在获取..." />
 
-    <LinearLayout
-        android:id="@+id/layout_widu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_jingdu"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/layout_huxun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="维度" />
+            android:layout_below="@+id/layout_wendu"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
 
-        <TextView
-            android:id="@+id/txt_latitude"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="互寻：" />
+
+            <TextView
+                android:id="@+id/txt_huxun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正在获取..." />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_bufang"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="正在获取..." />
+            android:layout_below="@+id/layout_huxun"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="设备布防：" />
 
+            <TextView
+                android:id="@+id/txt_bufang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已布防" />
 
-</RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

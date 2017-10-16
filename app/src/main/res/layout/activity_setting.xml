@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.werewol.laganxiang.ui.SettingActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/common_bar" />
+
+    <TextView
+        android:id="@+id/dingwei"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:text="实时定位"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@+id/include"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <com.suke.widget.SwitchButton
+        android:id="@+id/switch_dingwei"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dingwei"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dingwei"
+        tools:layout_editor_absoluteY="97dp" />
+
+    <TextView
+        android:id="@+id/blueteeth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="蓝牙开关"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@+id/dingwei"
+        app:layout_constraintTop_toBottomOf="@+id/dingwei" />
+
+    <com.suke.widget.SwitchButton
+        android:id="@+id/switch_blueteeth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/blueteeth"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/blueteeth"
+        tools:layout_editor_absoluteY="97dp" />
+
+    <TextView
+        android:id="@+id/fengmingqi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="蜂鸣器开关"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@+id/dingwei"
+        app:layout_constraintTop_toBottomOf="@+id/blueteeth" />
+
+    <com.suke.widget.SwitchButton
+        android:id="@+id/switch_fengmingqi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/fengmingqi"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fengmingqi"
+        tools:layout_editor_absoluteY="97dp" />
+
+    <TextView
+        android:id="@+id/led"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="LED开关"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@+id/dingwei"
+        app:layout_constraintTop_toBottomOf="@+id/fengmingqi" />
+
+    <com.suke.widget.SwitchButton
+        android:id="@+id/switch_led"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/led"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/led"
+        tools:layout_editor_absoluteY="192dp" />
+
+    <TextView
+        android:id="@+id/huxun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="互寻开关"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="@+id/dingwei"
+        app:layout_constraintTop_toBottomOf="@+id/led" />
+
+    <com.suke.widget.SwitchButton
+        android:id="@+id/switch_huxun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/huxun"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/huxun"
+        tools:layout_editor_absoluteY="406dp" />
+
+</android.support.constraint.ConstraintLayout>
