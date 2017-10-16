@@ -60,6 +60,11 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="${BAIDU_AK}" />
 
+        <!-- mqtt -->
+        <service
+            android:name="com.example.werewol.laganxiang.mqtt.QatjaService"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

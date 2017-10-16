@@ -1,7 +1,9 @@
 package com.example.werewol.laganxiang.ui;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +16,8 @@ import android.widget.Toast;
 
 import com.example.werewol.laganxiang.Constants;
 import com.example.werewol.laganxiang.R;
+import com.example.werewol.laganxiang.manager.MQTTManager;
+import com.example.werewol.laganxiang.mqtt.QatjaService;
 import com.example.werewol.laganxiang.utils.ToastUtil;
 
 import butterknife.BindView;
@@ -39,6 +43,8 @@ public class FirstActivity extends AppCompatActivity {
     @BindView(R.id.button2)
     Button button2;
 
+    private ServiceConnection connection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,15 @@ public class FirstActivity extends AppCompatActivity {
 
         checkPermission();
 
+        Intent service = new Intent(this, QatjaService.class);
+        connection = MQTTManager.getInstance().getConnection();
+        bindService(service, MQTTManager.getInstance().getConnection(), Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(connection);
     }
 
     @OnClick({R.id.button1, R.id.button7, R.id.button8, R.id.button6, R.id.button5, R.id.button3, R.id.button4, R.id.button2})
