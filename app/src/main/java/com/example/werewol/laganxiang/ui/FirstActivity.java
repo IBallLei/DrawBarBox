@@ -57,6 +57,8 @@ public class FirstActivity extends AppCompatActivity {
         Intent service = new Intent(this, QatjaService.class);
         connection = MQTTManager.getInstance().getConnection();
         bindService(service, MQTTManager.getInstance().getConnection(), Context.BIND_AUTO_CREATE);
+
+//        MQTTManager.getInstance().actionStart(this);
     }
 
     @Override
@@ -76,6 +78,7 @@ public class FirstActivity extends AppCompatActivity {
                 break;
             case R.id.button8:
                 ToastUtil.showShort(this, "敬请期待...");
+                MQTTManager.getInstance().subscribe();
                 break;
             case R.id.button6:
                 ToastUtil.showShort(this, "敬请期待...");

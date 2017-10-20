@@ -8,6 +8,12 @@ import android.os.IBinder;
 import com.example.werewol.laganxiang.application.LaGanXiangApplication;
 import com.example.werewol.laganxiang.mqtt.MQTTCallback;
 import com.example.werewol.laganxiang.mqtt.QatjaService;
+import com.example.werewol.laganxiang.utils.SignUtil;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.baidu.location.h.k.t;
 
 
 /**
@@ -63,7 +69,22 @@ public class MQTTManager {
         }
 
         // Set a unique id for this client-broker combination
-        client.setIdentifier(WiFiManager.getMacAddress());
+        String clientId = WiFiManager.getMacAddress();
+        String mqttclientId = clientId + "|securemode=2,signmethod=hmacsha1,timestamp="+t+"|";
+
+        Map<String, String> params = new HashMap<>();
+        params.put("productKey", "GgZCdhJKx8k"); //这个是对应用户在控制台注册的 设备productkey
+        params.put("deviceName", "2zVxKUdAkLDvKtnnXivD"); //这个是对应用户在控制台注册的 设备name
+        params.put("clientId", clientId);
+        String t = String.valueOf(System.currentTimeMillis());
+        params.put("timestamp", t);
+        String mqttPassword = SignUtil.sign(params, "a60Jjhqt4alkFP8HW99f8850Dxk1ZhPH", "hmacsha1");
+
+        client.setIdentifier(mqttclientId);
+        
+        client.setUsername("2zVxKUdAkLDvKtnnXivD"+"&"+"GgZCdhJKx8k");
+
+        client.setPassword(mqttPassword);
 
         // Set keep alive time
         client.setKeepAlive(3000);
@@ -74,7 +95,7 @@ public class MQTTManager {
 
     public void subscribe() {
 //        // Subscribe to a topic with Quality of Service AT_MOST_ONCE
-        client.subscribe("get");
+        client.subscribe("/GgZCdhJKx8k/2zVxKUdAkLDvKtnnXivD/get");
 //        // Subscribe to a topic with specified Quality of Service ()
 //        client.subscribe(topic, EXACTLY_ONCE);
 //        // Subscribe to multiple topics (String[]) with Quality of Service AT_MOST_ONCE
@@ -95,4 +116,5 @@ public class MQTTManager {
     public ServiceConnection getConnection() {
         return connection;
     }
+
 }

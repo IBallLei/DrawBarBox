@@ -94,7 +94,7 @@ public class QatjaService extends Service {
 
   private static final boolean DEBUG = true;
 
-  private static final String TAG = QatjaService.class.getSimpleName();
+  public static final String TAG = QatjaService.class.getSimpleName();
 
   /**
    * Current state of the connection
@@ -176,6 +176,8 @@ public class QatjaService extends Service {
   };
 
   private StateListener mStateListener = null;
+  private String username;
+  private String password;
 
   public interface StateListener {
     void onStateChanged(int newState);
@@ -277,6 +279,12 @@ public class QatjaService extends Service {
 
     if (protocolName != null)
       connect.setProtocolName(protocolName);
+
+    if (username != null)
+      connect.setUsername(username);
+
+    if (password != null)
+      connect.setPassword(password);
 
     sendMessage(connect, false);
   }
@@ -506,6 +514,14 @@ public class QatjaService extends Service {
 
   public void setProtocolName(String protocolName) {
     this.protocolName = protocolName;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   /**
