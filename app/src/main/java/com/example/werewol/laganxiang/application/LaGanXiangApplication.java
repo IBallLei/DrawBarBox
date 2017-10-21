@@ -1,6 +1,7 @@
 package com.example.werewol.laganxiang.application;
 
 import android.app.Application;
+import android.bluetooth.BluetoothSocket;
 
 import com.example.werewol.laganxiang.manager.MQTTManager;
 import com.example.werewol.laganxiang.thirdparty.BaiduMapManager;
@@ -10,6 +11,8 @@ import com.example.werewol.laganxiang.thirdparty.BaiduMapManager;
  */
 
 public class LaGanXiangApplication extends Application {
+        //不管是蓝牙连接方还是服务器方，得到socket对象后都传入
+        public static BluetoothSocket bluetoothSocket;
     /**
      * The s instance.
      */

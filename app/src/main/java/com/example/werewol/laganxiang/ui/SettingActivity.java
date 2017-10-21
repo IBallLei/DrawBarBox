@@ -1,10 +1,9 @@
 package com.example.werewol.laganxiang.ui;
 
+import android.bluetooth.BluetoothManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.werewol.laganxiang.R;
@@ -15,7 +14,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SettingActivity extends AppCompatActivity {
-
     @BindView(R.id.img_back_btn)
     ImageView imgBackBtn;
     @BindView(R.id.title)
@@ -74,7 +72,8 @@ public class SettingActivity extends AppCompatActivity {
 
                             break;
                         case R.id.switch_blueteeth:
-
+                            if (isChecked) {
+                            }
                             break;
                         case R.id.switch_fengmingqi:
 
