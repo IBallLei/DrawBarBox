@@ -4,7 +4,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 
-import com.booleanteeth.demo.appliaction.BltAppliaction;
+import com.example.werewol.laganxiang.application.LaGanXiangApplication;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -19,9 +19,9 @@ import java.io.InputStreamReader;
 public class ReceiveSocketService {
 
     public static void receiveMessage(Handler handler) {
-        if (BltAppliaction.bluetoothSocket == null || handler == null) return;
+        if (LaGanXiangApplication.bluetoothSocket == null || handler == null) return;
         try {
-            InputStream inputStream = BltAppliaction.bluetoothSocket.getInputStream();
+            InputStream inputStream = LaGanXiangApplication.bluetoothSocket.getInputStream();
             // 从客户端获取信息
             BufferedReader bff = new BufferedReader(new InputStreamReader(inputStream));
             String json;
