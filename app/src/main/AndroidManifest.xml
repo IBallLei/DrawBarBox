@@ -24,6 +24,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
 
     <application
         android:name=".application.LaGanXiangApplication"
@@ -54,6 +56,8 @@
             android:name=".ui.SettingActivity"
             android:screenOrientation="portrait" />
 
+        <!-- 庆科云 -->
+        <service android:name="io.fogcloud.fog_mqtt.service.MqttService" />
         <!-- 百度地图服务 -->
         <service
             android:name="com.baidu.location.f"
@@ -69,7 +73,6 @@
             android:name="com.example.werewol.laganxiang.mqtt.QatjaService"
             android:exported="false"/>
 
-        <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     </application>
 
 </manifest>

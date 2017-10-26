@@ -45,6 +45,9 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.jakewharton:butterknife:8.8.1'
     compile 'com.github.zcweng:switch-button:0.0.3@aar'
+    compile 'io.fogcloud.sdk:easylinkv3:0.1.4'
+    compile 'io.fogcloud.sdk:mqtt:0.0.3'
     compile 'se.wetcat.qatja:core:1.0.3'
     compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
+    compile 'com.lzy.net:okgo:3.0.4'
 }

@@ -13,7 +13,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.eclipse.paho.client.mqttv3.internal.websocket.Base64;
 
-
 /**
  * 签名工具类
  *

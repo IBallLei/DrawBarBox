@@ -140,6 +140,7 @@ public class BltManager {
      */
     private BroadcastReceiver searchDevices = new BroadcastReceiver() {
         //接收
+        @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             Bundle b = intent.getExtras();
@@ -297,12 +298,14 @@ public class BltManager {
                 startSearthBltDevice(context);
                 break;
             case BltContant.BLUE_TOOTH_OPEN://本机蓝牙启用
-                if (getmBluetoothAdapter() != null)
+                if (getmBluetoothAdapter() != null) {
                     getmBluetoothAdapter().enable();//启用
+                }
                 break;
             case BltContant.BLUE_TOOTH_CLOSE://本机蓝牙禁用
-                if (getmBluetoothAdapter() != null)
+                if (getmBluetoothAdapter() != null) {
                     getmBluetoothAdapter().disable();//禁用
+                }
                 break;
             case BltContant.BLUE_TOOTH_MY_SEARTH://本机蓝牙可以在300s内被搜索到
                 Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
@@ -311,11 +314,14 @@ public class BltManager {
                 break;
             case BltContant.BLUE_TOOTH_CLEAR://本机蓝牙关闭当前连接
                 try {
-                    if (getmBluetoothSocket() != null)
+                    if (getmBluetoothSocket() != null) {
                         getmBluetoothSocket().close();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                break;
+            default:
                 break;
         }
     }

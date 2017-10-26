@@ -3,7 +3,7 @@ package com.example.werewol.laganxiang.bluetooth;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.booleanteeth.demo.appliaction.BltAppliaction;
+import com.example.werewol.laganxiang.application.LaGanXiangApplication;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,10 +22,10 @@ public class SendSocketService {
      * @param message
      */
     public static void sendMessage(String message) {
-        if (BltAppliaction.bluetoothSocket == null || TextUtils.isEmpty(message)) return;
+        if (LaGanXiangApplication.bluetoothSocket == null || TextUtils.isEmpty(message)) return;
         try {
             message += "\n";
-            OutputStream outputStream = BltAppliaction.bluetoothSocket.getOutputStream();
+            OutputStream outputStream = LaGanXiangApplication.bluetoothSocket.getOutputStream();
             outputStream.write(message.getBytes("utf-8"));
             outputStream.flush();
         } catch (IOException e) {
@@ -37,9 +37,9 @@ public class SendSocketService {
      * 发送文件
      */
     public static void sendMessageByFile(String filePath) {
-        if (BltAppliaction.bluetoothSocket == null || TextUtils.isEmpty(filePath)) return;
+        if (LaGanXiangApplication.bluetoothSocket == null || TextUtils.isEmpty(filePath)) return;
         try {
-            OutputStream outputStream = BltAppliaction.bluetoothSocket.getOutputStream();
+            OutputStream outputStream = LaGanXiangApplication.bluetoothSocket.getOutputStream();
             //要传输的文件路径
             File file = new File(filePath);
             //说明不存在该文件

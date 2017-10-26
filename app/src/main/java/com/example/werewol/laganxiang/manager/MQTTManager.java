@@ -57,7 +57,7 @@ public class MQTTManager {
 
     public void setClient(String host, int port) {
         // Default host is test.mosquitto.org (you should change this!)
-        client.setHost("GgZCdhJKx8k.iot-as-mqtt.cn-shanghai.aliyuncs.com");
+        client.setHost("shanghai.aliyuncs.com");
 
         // Default mqtt port is 1883
         if (port == 0) {
