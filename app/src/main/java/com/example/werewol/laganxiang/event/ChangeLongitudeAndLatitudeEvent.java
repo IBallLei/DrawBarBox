@@ -5,10 +5,13 @@ package com.example.werewol.laganxiang.event;
  * on 2017/10/12.
  */
 public class ChangeLongitudeAndLatitudeEvent extends BaseEvent {
+
+    private int pointType;
     private double latitude;
     private double longitude;
 
-    public ChangeLongitudeAndLatitudeEvent(double latitude, double longitude) {
+    public ChangeLongitudeAndLatitudeEvent(int pointType, double latitude, double longitude) {
+        this.pointType = pointType;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -27,5 +30,14 @@ public class ChangeLongitudeAndLatitudeEvent extends BaseEvent {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public int getPointType() {
+        return pointType;
+    }
+
+    public ChangeLongitudeAndLatitudeEvent setPointType(int pointType) {
+        this.pointType = pointType;
+        return this;
     }
 }

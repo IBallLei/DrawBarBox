@@ -20,6 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class BaiduMapActivity extends AppCompatActivity {
+    public static final int POINT_TYPE_ME = 0;
+    public static final int POINT_TYPE_LAGANXIANG = 1;
 
     @BindView(R.id.bmapView)
     MapView mMapView;
@@ -62,7 +64,7 @@ public class BaiduMapActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(ChangeLongitudeAndLatitudeEvent event) {
-        BaiduMapManager.setMaker(mMapView, event.getLatitude(), event.getLongitude());
+        BaiduMapManager.setMaker(mMapView, event.getPointType(), event.getLatitude(), event.getLongitude());
     }
 
     @OnClick({R.id.setting, R.id.info})

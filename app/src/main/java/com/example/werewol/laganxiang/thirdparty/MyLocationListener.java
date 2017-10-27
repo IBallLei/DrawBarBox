@@ -5,6 +5,7 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.example.werewol.laganxiang.event.ChangeLongitudeAndLatitudeEvent;
+import com.example.werewol.laganxiang.ui.BaiduMapActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -71,7 +72,7 @@ public class MyLocationListener extends BDAbstractLocationListener {
         }
 
         EventBus.getDefault()
-                .post(new ChangeLongitudeAndLatitudeEvent(location.getLatitude(),
+                .post(new ChangeLongitudeAndLatitudeEvent(BaiduMapActivity.POINT_TYPE_ME, location.getLatitude(),
                         location.getLongitude()));
     }
 
@@ -83,6 +84,7 @@ public class MyLocationListener extends BDAbstractLocationListener {
      * @param diagnosticType    诊断类型（1~9）
      * @param diagnosticMessage 具体的诊断信息释义
      */
+    @Override
     public void onLocDiagnosticMessage(int locType, int diagnosticType, String diagnosticMessage) {
 
         if (diagnosticType == LocationClient.LOC_DIAGNOSTIC_TYPE_BETTER_OPEN_GPS) {

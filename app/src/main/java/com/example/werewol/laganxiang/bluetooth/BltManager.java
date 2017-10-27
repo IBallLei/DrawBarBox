@@ -18,6 +18,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.example.werewol.laganxiang.application.LaGanXiangApplication;
+import com.example.werewol.laganxiang.utils.AlarmUtils;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -76,6 +77,10 @@ public class BltManager {
         void onBltEnd(BluetoothDevice device);//连接完成
 
         void onBltNone(BluetoothDevice device);//未连接
+
+        void onBltOpen();
+
+        void onBltClose();
     }
 
     public BluetoothAdapter getmBluetoothAdapter() {
@@ -155,23 +160,58 @@ public class BltManager {
             // 搜索发现设备时，取得设备的信息；注意，这里有可能重复搜索同一设备
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                onRegisterBltReceiver.onBluetoothDevice(device);
-            }
-            //状态改变时
-            else if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
+                String name = device.getName();
+                Log.e("bluetooth", "name:" + name);
+                Log.e("bluetooth", "uuid:" + device.getUuids());
+                if ("NewKey_B".equals(name)) {
+                    stopSearthBltDevice();
+                    onRegisterBltReceiver.onBluetoothDevice(device);
+
+                }
+            } else if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
+                //状态改变时
                 device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 switch (device.getBondState()) {
                     case BluetoothDevice.BOND_BONDING://正在配对
-                        Log.d("BlueToothTestActivity", "正在配对......");
+                        Log.d("bluetooth", "正在配对......");
                         onRegisterBltReceiver.onBltIng(device);
                         break;
                     case BluetoothDevice.BOND_BONDED://配对结束
-                        Log.d("BlueToothTestActivity", "完成配对");
+                        Log.d("bluetooth", "完成配对");
                         onRegisterBltReceiver.onBltEnd(device);
                         break;
                     case BluetoothDevice.BOND_NONE://取消配对/未配对
-                        Log.d("BlueToothTestActivity", "取消配对");
+                        Log.d("bluetooth", "取消配对");
                         onRegisterBltReceiver.onBltNone(device);
+                    default:
+                        break;
+                }
+            }
+            if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
+                int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,
+                        BluetoothAdapter.ERROR);
+                switch (state) {
+                    case BluetoothAdapter.STATE_OFF:
+                        Log.d("bluetooth", "STATE_OFF 手机蓝牙关闭");
+                        onRegisterBltReceiver.onBltClose();
+                        break;
+                    case BluetoothAdapter.STATE_TURNING_OFF:
+                        Log.d("bluetooth", "STATE_TURNING_OFF 手机蓝牙正在关闭");
+                        break;
+                    case BluetoothAdapter.STATE_ON:
+                        Log.d("bluetooth", "STATE_ON 手机蓝牙开启");
+                        onRegisterBltReceiver.onBltOpen();
+                        break;
+                    case BluetoothAdapter.STATE_TURNING_ON:
+                        Log.d("bluetooth", "STATE_TURNING_ON 手机蓝牙正在开启");
+                        break;
+                    case BluetoothAdapter.STATE_CONNECTED:
+                        Log.d("bluetooth", "STATE_TURNING_ON 手机蓝牙已连接");
+                        break;
+                    case BluetoothAdapter.STATE_DISCONNECTED:
+                        Log.d("bluetooth", "STATE_TURNING_ON 手机蓝牙断开连接");
+                        AlarmUtils.alarm();
+                        break;
                     default:
                         break;
                 }
@@ -198,7 +238,7 @@ public class BltManager {
     /**
      * 获得系统保存的配对成功过的设备，并尝试连接
      */
-    private void getBltList() {
+    public void getBltList() {
         if (getmBluetoothAdapter() == null) return;
         //获得已配对的远程蓝牙设备的集合
         Set<BluetoothDevice> devices = getmBluetoothAdapter().getBondedDevices();
@@ -222,11 +262,11 @@ public class BltManager {
         try {
             //通过和服务器协商的uuid来进行连接
             mBluetoothSocket = btDev.createRfcommSocketToServiceRecord(BltContant.SPP_UUID);
+            //通过反射得到bltSocket对象，与uuid进行连接得到的结果一样，但这里不提倡用反射的方法
+//            mBluetoothSocket = (BluetoothSocket) btDev.getClass().getMethod("createRfcommSocket", new Class[]{int.class}).invoke(btDev, 1);
             if (mBluetoothSocket != null)
                 //全局只有一个bluetooth，所以我们可以将这个socket对象保存在appliaction中
                 LaGanXiangApplication.bluetoothSocket = mBluetoothSocket;
-            //通过反射得到bltSocket对象，与uuid进行连接得到的结果一样，但这里不提倡用反射的方法
-            //mBluetoothSocket = (BluetoothSocket) btDev.getClass().getMethod("createRfcommSocket", new Class[]{int.class}).invoke(btDev, 1);
             Log.d("blueTooth", "开始连接...");
             //在建立之前调用
             if (getmBluetoothAdapter().isDiscovering())

@@ -14,11 +14,10 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationConfiguration;
-import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.example.werewol.laganxiang.R;
+import com.example.werewol.laganxiang.ui.BaiduMapActivity;
 
 /**
  * Created by zhanglei
@@ -29,6 +28,7 @@ public class BaiduMapManager {
     public static LocationClient mLocationClient = null;
 
     public static BDAbstractLocationListener myListener = new MyLocationListener();
+    private static BitmapDescriptor bitmap;
 
     public static void init(Context context) {
 
@@ -37,6 +37,10 @@ public class BaiduMapManager {
         mLocationClient = new LocationClient(context);
         //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);
+
+        //构建Marker图标
+        bitmap = BitmapDescriptorFactory
+                .fromResource(R.drawable.location_icon);
 
         initLocation();
     }
@@ -83,13 +87,39 @@ public class BaiduMapManager {
         }
     }
 
-    public static void setMaker(MapView mapView, double latitude, double longitude) {
+    public static LatLng myPoint;
+    public static double myLatitude;
+    public static double myLongitude;
+    public static LatLng laganxiangPoint;
+    public static double laganxiangLatitude;
+    public static double laganxiangLongitude;
+
+    public static void setMaker(MapView mapView, int pointType, double latitude, double longitude) {
         BaiduMap baiduMap = mapView.getMap();
+        switch (pointType) {
+            case BaiduMapActivity.POINT_TYPE_ME:
+                myPoint = new LatLng(latitude, longitude);
+                myLatitude = latitude;
+                myLongitude = longitude;
+                showPointInMap(baiduMap, myPoint);
+                moveToPoint(baiduMap, myPoint);
+                break;
+            case BaiduMapActivity.POINT_TYPE_LAGANXIANG:
+                laganxiangPoint = new LatLng(latitude, longitude);
+                laganxiangLatitude = latitude;
+                laganxiangLongitude = longitude;
+                showPointInMap(baiduMap, myPoint);
+                showPointInMap(baiduMap, laganxiangPoint);
+                break;
+            default:
+
+                break;
+        }
+
+    }
+
+    private static void showPointInMap(BaiduMap baiduMap, LatLng point) {
         //定义Maker坐标点
-        LatLng point = new LatLng(latitude, longitude);
-        //构建Marker图标
-        BitmapDescriptor bitmap = BitmapDescriptorFactory
-                .fromResource(R.drawable.location_icon);
         //构建MarkerOption，用于在地图上添加Marker
         OverlayOptions option = new MarkerOptions()
                 .zIndex(9)  //设置marker所在层级
@@ -97,8 +127,11 @@ public class BaiduMapManager {
                 .position(point)
                 .icon(bitmap);
         //在地图上添加Marker，并显示
+        baiduMap.clear();
         baiduMap.addOverlay(option);
+    }
 
+    private static void moveToPoint(BaiduMap baiduMap, LatLng point) {
         //移动到我的位置
         MapStatus mMapStatus = new MapStatus.Builder()
                 .target(point)

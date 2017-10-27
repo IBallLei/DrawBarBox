@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.werewol.laganxiang.R;
-import com.example.werewol.laganxiang.event.BaseEvent;
+import com.example.werewol.laganxiang.event.InfoEvent;
 import com.example.werewol.laganxiang.thirdparty.BaiduMapManager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     TextView txtHuxun;
     @BindView(R.id.txt_bufang)
     TextView txtBufang;
+    @BindView(R.id.img_demo)
+    ImageView imgDemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +60,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(BaseEvent event) {
-
+    public void onMessageEvent(InfoEvent event) {
+        int imageNum = event.getImageNum();
+        switch (imageNum) {
+            case 1:
+//                imgDemo.setImageResource(R.);
+                break;
+        }
+        double temperature = event.getTemperature();
+        txtWendu.setText(temperature + "摄氏度");
     }
 
     @OnClick(R.id.img_back_btn)

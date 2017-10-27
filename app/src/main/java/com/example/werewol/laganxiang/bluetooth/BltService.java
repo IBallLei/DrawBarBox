@@ -48,7 +48,7 @@ public class BltService {
     private void createBltService() {
         try {
             if (BltManager.getInstance().getmBluetoothAdapter() != null && BltManager.getInstance().getmBluetoothAdapter().isEnabled()) {
-                bluetoothServerSocket = BltManager.getInstance().getmBluetoothAdapter().listenUsingRfcommWithServiceRecord("com.bluetooth.demo", BltContant.SPP_UUID);
+                bluetoothServerSocket = BltManager.getInstance().getmBluetoothAdapter().listenUsingRfcommWithServiceRecord("com.example.werewol.laganxiang", BltContant.SPP_UUID);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,7 +64,12 @@ public class BltService {
             try {
                 //注意，当accept()返回BluetoothSocket时，socket已经连接了，因此不应该调用connect方法。
                 //这里会线程阻塞，直到有蓝牙设备链接进来才会往下走
-                socket = getBluetoothServerSocket().accept();
+                if (getBluetoothServerSocket() == null) {
+                    return;
+                }
+                Log.e("blueTooth", "accept:1");
+                socket = bluetoothServerSocket  .accept();
+                Log.e("blueTooth", ".accept:2");
                 if (socket != null) {
                     LaGanXiangApplication.bluetoothSocket = socket;
                     //回调结果通知
@@ -79,6 +84,7 @@ public class BltService {
                 }
             } catch (IOException e) {
                 try {
+                    Log.e("blueTooth", "IOException:" + e);
                     getBluetoothServerSocket().close();
                 } catch (IOException e1) {
                     e1.printStackTrace();

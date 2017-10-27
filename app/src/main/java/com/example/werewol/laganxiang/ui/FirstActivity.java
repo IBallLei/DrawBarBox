@@ -11,6 +11,7 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -19,10 +20,16 @@ import com.example.werewol.laganxiang.Constants;
 import com.example.werewol.laganxiang.R;
 import com.example.werewol.laganxiang.bluetooth.BltContant;
 import com.example.werewol.laganxiang.bluetooth.BltManager;
+import com.example.werewol.laganxiang.bluetooth.BltService;
 import com.example.werewol.laganxiang.bluetooth.ReceiveSocketService;
+import com.example.werewol.laganxiang.event.ChangeLongitudeAndLatitudeEvent;
+import com.example.werewol.laganxiang.event.InfoEvent;
 import com.example.werewol.laganxiang.http.OkGoUtil;
 import com.example.werewol.laganxiang.http.response.BaseResponse;
+import com.example.werewol.laganxiang.utils.AlarmUtils;
 import com.example.werewol.laganxiang.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +67,7 @@ public class FirstActivity extends AppCompatActivity implements OkGoUtil.CallBac
         @Override
         public void onBluetoothDevice(BluetoothDevice device) {
             final BluetoothDevice bluetoothDevice = device;
+            Log.e("blueTooth", ".onBluetoothDevice:" + bluetoothDevice);
             ToastUtil.showShort(FirstActivity.this, "onBluetoothDevice");
             //链接的操作应该在子线程
             new Thread(new Runnable() {
@@ -72,38 +80,95 @@ public class FirstActivity extends AppCompatActivity implements OkGoUtil.CallBac
 
         @Override
         public void onBltIng(BluetoothDevice device) {
-            ToastUtil.showShort(FirstActivity.this, "onBluetoothDevice");
+            ToastUtil.showShort(FirstActivity.this, "onBltIng");
         }
 
         @Override
-        public void onBltEnd(BluetoothDevice device) {
-            ToastUtil.showShort(FirstActivity.this, "onBluetoothDevice");
-            // 配对完成接受信息
-            ReceiveSocketService.receiveMessage(handler);
+        public void onBltEnd(final BluetoothDevice device) {
+            ToastUtil.showShort(FirstActivity.this, "onBltEnd");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    BltManager.getInstance().createBond(device, handler);
+                }
+            }).start();
         }
 
         @Override
         public void onBltNone(BluetoothDevice device) {
-            ToastUtil.showShort(FirstActivity.this, "onBluetoothDevice");
-       }
+            ToastUtil.showShort(FirstActivity.this, "onBltNone");
+        }
+
+        @Override
+        public void onBltOpen() {
+            // 添加蓝牙服务器
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    BltService.getInstance().run(handler);
+//                }
+//            }).start();
+        }
+
+        @Override
+        public void onBltClose() {
+            BltService.getInstance().cancel();
+        }
     };
 
     Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
             switch (message.what) {
+                case 1://搜索蓝牙
+                    break;
+                case 2://蓝牙可以被搜索
+                    break;
+                case 3:
+                    final BluetoothDevice bltServiceDev = (BluetoothDevice) message.obj;
+                    ToastUtil.showShort(FirstActivity.this, "bltServiceDev:" + bltServiceDev);
+
+                    break;
                 case 4:
                     BluetoothDevice btDev = (BluetoothDevice) message.obj;
-                    ToastUtil.showShort(FirstActivity.this, "btDev:" + btDev);
+                    ToastUtil.showShort(FirstActivity.this, "链接成功——btDev:" + btDev);
+                    // 配对完成接受信息
+                    ReceiveSocketService.receiveMessage(handler);
                     break;
                 default:
                     String msg = (String) message.obj;
                     ToastUtil.showShort(FirstActivity.this, "msg:" + msg);
+                    parseMsgInfo(msg);
                     break;
             }
             return false;
         }
     });
+
+    /**
+     * 解释蓝牙设备返回值
+     *
+     * @param msg "6/333.333333/22.2222222/27.45/201710191412"
+     */
+    private void parseMsgInfo(String msg) {
+        if (msg != null) {
+            String[] split = msg.split("/");
+            int imageNum = Integer.parseInt(split[0]);
+            double longitude = Double.parseDouble(split[1]);
+            double latitude = Double.parseDouble(split[2]);
+            double temperature = Double.parseDouble(split[3]);
+            String time = split[4];
+            ToastUtil.showShort(this, "角度图：" + imageNum
+                    + "，经度：" + longitude + "，维度：" + latitude
+                    + "，温度：" + temperature + "，时间：" + time);
+
+
+            EventBus.getDefault()
+                    .post(new ChangeLongitudeAndLatitudeEvent(BaiduMapActivity.POINT_TYPE_LAGANXIANG,
+                            latitude, longitude));
+            EventBus.getDefault().post(new InfoEvent(imageNum, temperature));
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +192,7 @@ public class FirstActivity extends AppCompatActivity implements OkGoUtil.CallBac
         // 反注册蓝牙配对
         BltManager.getInstance().unregisterReceiver(this);
 //        unbindService(connection);
+        AlarmUtils.stopAlarm();
     }
 
     private void connectTopic() {
@@ -145,6 +211,25 @@ public class FirstActivity extends AppCompatActivity implements OkGoUtil.CallBac
         BltManager.getInstance().checkBleDevice(this);
         // 监听蓝牙广播
         BltManager.getInstance().registerBltReceiver(this, onRegisterBltReceiver);
+
+        initBlt();
+    }
+
+    private void initBlt() {
+        //让本机设备能够被其他人搜索到
+        BltManager.getInstance().clickBlt(this, BltContant.BLUE_TOOTH_MY_SEARTH);
+
+//        BltManager.getInstance().getBltList();
+
+        // 添加蓝牙服务器
+//        if (BltManager.getInstance().getmBluetoothAdapter().isEnabled()) {
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    BltService.getInstance().run(handler);
+//                }
+//            }).start();
+//        }
     }
 
     @OnClick({R.id.button1, R.id.button7, R.id.button8, R.id.button6, R.id.button5, R.id.button3, R.id.button4, R.id.button2})
@@ -234,4 +319,6 @@ public class FirstActivity extends AppCompatActivity implements OkGoUtil.CallBac
 //            }
 //        }
     }
+
+
 }
