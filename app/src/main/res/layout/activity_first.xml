@@ -12,6 +12,7 @@
         android:layout_height="90dp"
         android:layout_marginLeft="60dp"
         android:layout_marginTop="30dp"
+        android:background="@drawable/button3"
         android:text="钥匙串"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,6 +23,7 @@
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_marginTop="33dp"
+        android:background="@drawable/button3"
         android:text="保险柜"
         app:layout_constraintLeft_toLeftOf="@+id/button1"
         app:layout_constraintTop_toBottomOf="@+id/button5" />
@@ -30,6 +32,7 @@
         android:id="@+id/button8"
         android:layout_width="90dp"
         android:layout_height="90dp"
+        android:background="@drawable/button3"
         android:text="+"
         android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="@+id/button2"
@@ -39,6 +42,7 @@
         android:id="@+id/button6"
         android:layout_width="90dp"
         android:layout_height="90dp"
+        android:background="@drawable/button3"
         android:text="宠物"
         app:layout_constraintLeft_toLeftOf="@+id/button2"
         app:layout_constraintTop_toTopOf="@+id/button5" />
@@ -48,6 +52,7 @@
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_marginTop="33dp"
+        android:background="@drawable/button3"
         android:text="旅行箱"
         app:layout_constraintLeft_toLeftOf="@+id/button1"
         app:layout_constraintTop_toBottomOf="@+id/button3" />
@@ -57,6 +62,7 @@
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_marginTop="33dp"
+        android:background="@drawable/button3"
         android:text="女士手包"
         app:layout_constraintLeft_toLeftOf="@+id/button1"
         app:layout_constraintTop_toBottomOf="@+id/button1" />
@@ -65,6 +71,7 @@
         android:id="@+id/button4"
         android:layout_width="90dp"
         android:layout_height="90dp"
+        android:background="@drawable/button3"
         android:text="双肩背包"
         app:layout_constraintLeft_toLeftOf="@+id/button2"
         app:layout_constraintTop_toTopOf="@+id/button3" />
@@ -74,6 +81,7 @@
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_marginRight="60dp"
+        android:background="@drawable/button3"
         android:text="钱包"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/button1" />

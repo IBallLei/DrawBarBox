@@ -22,7 +22,7 @@
             android:layout_height="200dp"
             android:background="@android:color/darker_gray"
             android:scaleType="fitXY"
-            android:src="@drawable/lagan6" />
+            android:src="@drawable/image_lgx1" />
 
         <LinearLayout
             android:id="@+id/layout_id"

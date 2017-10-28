@@ -22,7 +22,6 @@ import com.example.werewol.laganxiang.bluetooth.BltContant;
 import com.example.werewol.laganxiang.bluetooth.BltManager;
 import com.example.werewol.laganxiang.bluetooth.BltService;
 import com.example.werewol.laganxiang.bluetooth.ReceiveSocketService;
-import com.example.werewol.laganxiang.event.ChangeLongitudeAndLatitudeEvent;
 import com.example.werewol.laganxiang.event.InfoEvent;
 import com.example.werewol.laganxiang.http.OkGoUtil;
 import com.example.werewol.laganxiang.http.response.BaseResponse;
@@ -166,9 +165,9 @@ public class FirstActivity extends AppCompatActivity implements OkGoUtil.CallBac
                     + "，温度：" + temperature + "，时间：" + time);
 
 
-            EventBus.getDefault()
-                    .post(new ChangeLongitudeAndLatitudeEvent(BaiduMapActivity.POINT_TYPE_LAGANXIANG,
-                            latitude, longitude));
+//            EventBus.getDefault()
+//                    .post(new ChangeLongitudeAndLatitudeEvent(BaiduMapActivity.POINT_TYPE_LAGANXIANG,
+//                            latitude, longitude));
             EventBus.getDefault().post(new InfoEvent(imageNum, temperature));
         }
     }

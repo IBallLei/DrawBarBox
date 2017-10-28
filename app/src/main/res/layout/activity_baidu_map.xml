@@ -14,21 +14,17 @@
 
     <Button
         android:id="@+id/setting"
-        android:layout_width="60dp"
+        android:layout_width="120dp"
         android:layout_height="60dp"
-        android:background="@drawable/button4"
-        android:text="设置"
-        android:textSize="15dp"
+        android:background="@drawable/image_shezhi"
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/info"
-        android:layout_width="60dp"
+        android:layout_width="120dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/button4"
-        android:text="信息"
-        android:textSize="15dp"
+        android:background="@drawable/image_msg"
         app:layout_constraintRight_toRightOf="@+id/setting"
         app:layout_constraintTop_toBottomOf="@+id/setting" />
 
