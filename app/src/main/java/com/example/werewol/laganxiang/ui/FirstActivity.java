@@ -135,10 +135,13 @@ public class FirstActivity extends AppCompatActivity implements OkGoUtil.CallBac
                     // 配对完成接受信息
                     ReceiveSocketService.receiveMessage(handler);
                     break;
-                default:
+                case 5:
                     String msg = (String) message.obj;
                     ToastUtil.showShort(FirstActivity.this, "msg:" + msg);
                     parseMsgInfo(msg);
+                    break;
+
+                default:
                     break;
             }
             return false;
@@ -217,7 +220,7 @@ public class FirstActivity extends AppCompatActivity implements OkGoUtil.CallBac
 
     private void initBlt() {
         //让本机设备能够被其他人搜索到
-        BltManager.getInstance().clickBlt(this, BltContant.BLUE_TOOTH_MY_SEARTH);
+        BltManager.getInstance().clickBlt(this, BltContant.BLUE_TOOTH_SEARTH);
 
 //        BltManager.getInstance().getBltList();
 
@@ -237,6 +240,7 @@ public class FirstActivity extends AppCompatActivity implements OkGoUtil.CallBac
         switch (view.getId()) {
             case R.id.button1:
                 ToastUtil.showShort(this, "敬请期待...");
+                AlarmUtils.alarm();
                 break;
             case R.id.button7:
                 ToastUtil.showShort(this, "敬请期待...");
@@ -259,6 +263,7 @@ public class FirstActivity extends AppCompatActivity implements OkGoUtil.CallBac
                 break;
             case R.id.button2:
                 ToastUtil.showShort(this, "敬请期待...");
+                AlarmUtils.stopAlarm();
                 break;
             default:
                 break;

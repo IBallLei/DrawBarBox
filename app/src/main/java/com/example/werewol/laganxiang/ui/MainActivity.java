@@ -2,10 +2,12 @@ package com.example.werewol.laganxiang.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.werewol.laganxiang.R;
+import com.example.werewol.laganxiang.bluetooth.ReceiveSocketService;
 import com.example.werewol.laganxiang.event.InfoEvent;
 import com.example.werewol.laganxiang.thirdparty.BaiduMapManager;
 
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.txt_wendu)
     TextView txtWendu;
     @BindView(R.id.txt_huxun)
-    TextView txtHuxun;
+    Button txtHuxun;
     @BindView(R.id.txt_bufang)
     TextView txtBufang;
     @BindView(R.id.img_demo)
@@ -64,7 +66,24 @@ public class MainActivity extends AppCompatActivity {
         int imageNum = event.getImageNum();
         switch (imageNum) {
             case 1:
-//                imgDemo.setImageResource(R.);
+                imgDemo.setImageResource(R.drawable.image_lgx1);
+                break;
+            case 2:
+                imgDemo.setImageResource(R.drawable.image_lgx2);
+                break;
+            case 3:
+                imgDemo.setImageResource(R.drawable.image_lgx3);
+                break;
+            case 4:
+                imgDemo.setImageResource(R.drawable.image_lgx4);
+                break;
+            case 5:
+                imgDemo.setImageResource(R.drawable.image_lgx5);
+                break;
+            case 6:
+                imgDemo.setImageResource(R.drawable.image_lgx6);
+                break;
+            default:
                 break;
         }
         double temperature = event.getTemperature();
@@ -76,4 +95,8 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    @OnClick(R.id.txt_huxun)
+    public void onSendClicked() {
+        ReceiveSocketService.sendMessage();
+    }
 }

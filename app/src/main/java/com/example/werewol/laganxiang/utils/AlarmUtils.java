@@ -32,7 +32,7 @@ public class AlarmUtils {
 
     private static void startVibrate() {
         long[] pattern = {100, 400, 100, 400};   // 停止 开启 停止 开启
-        vibrator.vibrate(pattern, 30);
+        vibrator.vibrate(pattern, 2);
     }
 
     private static void stopVibrate() {

@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 /**
  * Created by Luhao on 2016/9/28.
@@ -16,27 +17,40 @@ import java.io.InputStreamReader;
  */
 public class ReceiveSocketService {
 
-    public static void receiveMessage(Handler handler) {
+    public static void receiveMessage(final Handler handler) {
         if (LaGanXiangApplication.bluetoothSocket == null || handler == null) return;
         try {
-            InputStream inputStream = LaGanXiangApplication.bluetoothSocket.getInputStream();
+            final InputStream inputStream = LaGanXiangApplication.bluetoothSocket.getInputStream();
             // 从客户端获取信息
             BufferedReader bff = new BufferedReader(new InputStreamReader(inputStream));
             String json;
 
-            // 无线循环来接收数据
-            while (true) {
-                // 创建一个128字节的缓冲
-                byte[] buffer = new byte[128];
-                // 每次读取128字节，并保存其读取的角标
-                int count = inputStream.read(buffer);
-                // 创建Message类，向handler发送数据
-                Message msg = Message.obtain();
-                // 发送一个String的数据，让他向上转型为obj类型
-                msg.obj = new String(buffer, 0, count, "utf-8");
-                // 发送数据
-                handler.sendMessage(msg);
-            }
+            final byte[] buffer = new byte[128];
+            final int[] count = {0};
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    // 无线循环来接收数据
+                    while (true) {
+                        // 创建一个128字节的缓冲
+                        Message msg = null;
+                        // 每次读取128字节，并保存其读取的角标
+                        try {
+                            count[0] = inputStream.read(buffer);
+                            // 创建Message类，向handler发送数据
+                            msg = Message.obtain();
+                            msg.what = 5;
+                            // 发送一个String的数据，让他向上转型为obj类型
+                            msg.obj = new String(buffer, 0, count[0], "utf-8");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        // 发送数据
+                        handler.sendMessage(msg);
+                    }
+                }
+            }).start();
 
 //            while (true) {
 //                while ((json = bff.readLine()) != null) {
@@ -64,6 +78,19 @@ public class ReceiveSocketService {
 //                    }
 //                }
 //            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendMessage() {
+        try {
+            OutputStream outputStream = LaGanXiangApplication.bluetoothSocket.getOutputStream();
+            byte[] b = "1".getBytes();
+            // 2、把socket输入流写到文件输出流中去
+            outputStream.write(b, 0, b.length);
+            //这里通过先前传递过来的文件大小作为参照，因为该文件流不能自主停止，所以通过判断文件大小来跳出循环
+            outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
