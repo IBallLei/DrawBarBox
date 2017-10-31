@@ -21,7 +21,6 @@ import com.example.werewol.laganxiang.R;
 import com.example.werewol.laganxiang.bluetooth.BltContant;
 import com.example.werewol.laganxiang.bluetooth.BltManager;
 import com.example.werewol.laganxiang.bluetooth.BltService;
-import com.example.werewol.laganxiang.bluetooth.ReceiveSocketService;
 import com.example.werewol.laganxiang.event.InfoEvent;
 import com.example.werewol.laganxiang.http.OkGoUtil;
 import com.example.werewol.laganxiang.http.response.BaseResponse;
@@ -132,7 +131,7 @@ public class FirstActivity extends AppCompatActivity implements OkGoUtil.CallBac
                     BluetoothDevice btDev = (BluetoothDevice) message.obj;
                     ToastUtil.showShort(FirstActivity.this, "链接成功——btDev:" + btDev);
                     // 配对完成接受信息
-                    ReceiveSocketService.receiveMessage(handler);
+//                    ReceiveSocketService.receiveMessage(handler);
                     break;
                 case 5:
                     String msg = (String) message.obj;
